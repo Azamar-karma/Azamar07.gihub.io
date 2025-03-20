@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Mời Kỷ Yếu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe6f2;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            flex-direction: column;
+        }
+        .led-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: 0 0 5px #ff0000, 0 0 10px #ff3333, 0 0 15px #ff6666;
+            letter-spacing: 5px;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            animation: led-scroll 3s steps(10, end) infinite alternate;
+        }
+        @keyframes led-scroll {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 430px;
+            height: 300px;
+            position: relative;
+            z-index: 10;
+            animation: pop-in 0.6s ease-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        @keyframes pop-in {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            animation: fall 3s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(100vh) scale(1.5); opacity: 0; }
+        }
+        .hidden { display: none; }
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        h1 {
+            color: #d63384;
+            animation: bounce 2s infinite alternate, glow 1.5s infinite;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5px); }
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px #ff66b2; }
+            100% { text-shadow: 0 0 15px #ff3399; }
+        }
+        button {
+            background-color: #d63384;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        button:active {
+            transform: scale(0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="led-text">MINH TÚ VJP PRO</div>
+    <div class="card" id="inviteCard">
+        <h1>Mời bạn đi kỷ yếu! 🐱</h1>
+        <h2>📢 Bạn có lời mời!</h2>
+        <p>📍 Địa điểm: Công viên trung tâm</p>
+        <p>⏰ Thời gian: 9:00 AM - 11:30 PM, 23/03/2025</p>
+        <button onclick="confirmInvite()">Xác nhận tham gia</button>
+    </div>
+    <div class="hearts-container" id="heartsContainer"></div>
+    <script>
+        let raining = false;
+        function confirmInvite() {
+            document.getElementById('inviteCard').classList.add('hidden');
+            if (!raining) {
+                raining = true;
+                setInterval(createHeart, 150);
+            }
+        }
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '-10vh';
+            heart.style.fontSize = Math.random() * 30 + 20 + 'px';
+            document.getElementById('heartsContainer').appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
